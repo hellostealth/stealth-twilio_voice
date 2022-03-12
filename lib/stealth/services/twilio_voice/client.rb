@@ -18,7 +18,7 @@ module Stealth
         end
 
         def transmit
-          Thread.current[:voice_reply] = reply[:msg]
+          Thread.current[:voice_reply] = reply
 
           Stealth::Logger.l(
             topic: :twilio_voice,

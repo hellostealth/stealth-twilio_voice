@@ -33,7 +33,7 @@ module Stealth
           service_message.sender_id = params['From']
           service_message.target_id = params['To']
           if params["Digits"].present?
-            service_message.message = parse_int(params["Digits"])
+            service_message.message = params["Digits"]
           elsif params["SpeechResult"].present?
             service_message.message = params["SpeechResult"]
             service_message.confidence = parse_float(params["Confidence"])
@@ -48,15 +48,7 @@ module Stealth
 
         def send_voice_reply
           response_headers = { 'Content-Type' => 'text/xml' }
-          [200, response_headers, Thread.current[:voice_reply]]
-        end
-
-        def parse_int(int)
-          Integer(int)
-        rescue TypeError
-          return nil
-        rescue ArgumentError
-          return nil
+          [200, response_headers, Thread.current[:voice_reply].to_s]
         end
 
         def parse_float(float)
